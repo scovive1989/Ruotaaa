@@ -28,45 +28,25 @@ function startGame(idx) {
     const data = livelli[idx];
     document.getElementById('categoryDisplay').innerText = data.categoria;
     
-    const words = data.frase.split(' ');
-    let rowsData = [[], [], [], []];
-    let currRow = 1;
-
-    words.forEach(w => {
-        if (rowsData[currRow].join(' ').length + w.length + 1 > rowCaps[currRow]) currRow++;
-        if (currRow < 4) rowsData[currRow].push(w);
-    });
-
-    for (let i = 0; i < 4; i++) {
-        const tr = document.getElementById(`row-${i+1}`);
-        tr.innerHTML = '';
-        const txt = rowsData[i].join(' ');
-        const pad = Math.floor((rowCaps[i] - txt.length) / 2);
-
-        for (let j = 0; j < rowCaps[i]; j++) {
-            const td = document.createElement('td');
-            td.className = 'tile';
-            const char = txt[j - pad];
-            if (char && char !== ' ') {
-                td.classList.add('active');
-                td.dataset.letter = char;
-            }
-            tr.appendChild(td);
-        }
-    }
+    // Chiamiamo la funzione che disegna il tabellone correttamente
+    setupBoard(data.frase);
     setupKeyboard();
 }
+
 function setupBoard(frase) {
     const words = frase.split(' ');
     let rowsData = [[], [], [], []];
     let currRow = 1;
 
-    // Distribuzione parole
+    // 1. Distribuzione parole sulle righe (Wrapping)
     words.forEach(w => {
-        if (rowsData[currRow].join(' ').length + w.length + 1 > rowCaps[currRow]) currRow++;
+        if (rowsData[currRow].join(' ').length + w.length + 1 > rowCaps[currRow]) {
+            currRow++;
+        }
         if (currRow < 4) rowsData[currRow].push(w);
     });
 
+    // 2. Generazione fisica delle caselle
     for (let i = 0; i < 4; i++) {
         const tr = document.getElementById(`row-${i+1}`);
         tr.innerHTML = '';
@@ -74,26 +54,27 @@ function setupBoard(frase) {
         const txt = rowsData[i].join(' ');
         const pad = Math.floor((rowCaps[i] - txt.length) / 2);
 
-        // Tutte le righe ora hanno 14 slot nel DOM per allinearsi perfettamente
+        // Ogni riga ha 14 slot totali per garantire l'allineamento verticale
         const totalSlots = 14; 
         
         for (let j = 0; j < totalSlots; j++) {
             const td = document.createElement('td');
-            td.className = 'tile';
-
-            // LOGICA DEL SALTO (Riga 1 e 4)
-            // Se siamo nella riga 1 o 4, la prima (0) e l'ultima (13) cella sono vuote
+            
+            // LOGICA DEL SALTO: Riga 1 (i=0) e Riga 4 (i=3)
+            // Nascondiamo la prima (j=0) e l'ultima (j=13) cella
             if ((i === 0 || i === 3) && (j === 0 || j === 13)) {
-                td.classList.add('offset-tile');
+                td.className = 'tile offset-tile'; // Usa offset-tile per nasconderla
             } else {
-                // Calcoliamo la lettera per le caselle centrali
-                // Nelle righe 1 e 4, lo slot "0" del testo corrisponde al j=1
-                const charIndex = (i === 0 || i === 3) ? j - 1 - pad : j - pad;
+                td.className = 'tile';
+                
+                // Calcoliamo l'indice del carattere correggendo l'offset per le righe 1 e 4
+                const charIndex = (i === 0 || i === 3) ? (j - 1 - pad) : (j - pad);
                 const char = txt[charIndex];
 
                 if (char && char !== ' ') {
                     td.classList.add('active');
                     td.dataset.letter = char;
+                    // td.innerText = char; // Decommenta questa riga se vuoi vedere subito le lettere per testare
                 }
             }
             tr.appendChild(td);
@@ -111,7 +92,10 @@ function setupKeyboard() {
         b.onclick = () => {
             b.disabled = true;
             const targets = document.querySelectorAll(`.tile[data-letter="${l}"]`);
-            targets.forEach(t => t.innerText = l);
+            targets.forEach(t => {
+                t.innerText = l;
+                t.style.backgroundColor = "white"; // Opzionale: assicura il colore bianco
+            });
         };
         kb.appendChild(b);
     });
