@@ -3,34 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ruota della Fortuna - Livelli</title>
+    <title>La Ruota della Fortuna - I Miei Livelli</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="game-container">
-        <div class="header">
-            <div class="logo">RUOTA DELLA FORTUNA</div>
-            <div class="level-selector">
-                <label for="levelSelect">Scegli Livello:</label>
-                <select id="levelSelect" onchange="loadLevel()">
-                    <option value="0">Livello 1: Facile</option>
-                    <option value="1">Livello 2: Proverbio</option>
-                    <option value="2">Livello 3: Cinema</option>
-                </select>
-            </div>
-        </div>
+    <div id="home-screen" class="screen menu-bg">
+        <h1 class="menu-title">I MIEI LIVELLI</h1>
         
-        <div id="board" class="board">
-            <div class="row r1" id="row-1"></div>
-            <div class="row r2" id="row-2"></div>
-            <div class="row r3" id="row-3"></div>
-            <div class="row r4" id="row-4"></div>
+        <div class="search-container">
+            <input type="text" placeholder="Cerca categoria..." id="searchInput">
         </div>
 
-        <div class="info">
-            <h2 id="categoryDisplay">CATEGORIA: ---</h2>
+        <div id="levels-list" class="levels-list">
+            </div>
+    </div>
+
+    <div id="game-screen" class="screen hidden game-bg">
+        <div class="game-header">
+            <button class="back-btn" onclick="showHome()">← Torna ai Livelli</button>
+            <div id="categoryDisplay" class="category-tag">CATEGORIA</div>
         </div>
+
+        <div class="board-wrapper">
+            <div id="board" class="board">
+                <div class="row r1" id="row-1"></div>
+                <div class="row r2" id="row-2"></div>
+                <div class="row r3" id="row-3"></div>
+                <div class="row r4" id="row-4"></div>
+            </div>
+        </div>
+
+        <div id="keyboard" class="keyboard"></div>
     </div>
 
     <script src="script.js"></script>
