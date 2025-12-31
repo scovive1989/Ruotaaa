@@ -7,56 +7,78 @@
 
 body {
     margin: 0;
+    padding: 0;
     font-family: 'Segoe UI', sans-serif;
     background-color: var(--menu-green);
     color: white;
-    display: flex;
-    justify-content: center;
+    /* Rimosso overflow: hidden per permettere lo scroll su iPad */
 }
 
-.screen { width: 100%; max-width: 500px; min-height: 100vh; text-align: center; padding: 20px; box-sizing: border-box; }
+.screen { 
+    width: 100%; 
+    max-width: 800px; /* Aumentato per iPad */
+    min-height: 100vh; 
+    margin: 0 auto;
+    text-align: center; 
+    padding: 20px; 
+    box-sizing: border-box; 
+    display: flex;
+    flex-direction: column;
+}
+
 .hidden { display: none !important; }
 
-/* STILE MENU (Dall'immagine) */
-.menu-title { color: var(--level-yellow); font-size: 2.5rem; margin-top: 40px; font-weight: 900; }
-.search-container { margin: 20px 0; }
-.search-container input {
-    width: 90%; padding: 12px 40px; border-radius: 15px; border: none; font-size: 1rem;
+/* MENU */
+.levels-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    align-items: center; 
+    padding-bottom: 50px; /* Spazio extra in fondo */
 }
 
-.levels-list { display: flex; flex-direction: column; gap: 12px; align-items: center; }
 .level-btn {
-    width: 90%; background-color: var(--level-yellow); border: none; padding: 18px;
-    border-radius: 15px; color: black; font-weight: bold; font-size: 1.1rem;
-    cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    width: 100%; 
+    max-width: 400px; /* Evita che i tasti siano troppo larghi su iPad */
+    background-color: var(--level-yellow); 
+    border: none; 
+    padding: 20px;
+    border-radius: 15px; 
+    color: black; 
+    font-weight: bold; 
+    font-size: 1.2rem;
+    cursor: pointer; 
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
 }
 
-/* STILE GIOCO E TABELLONE INGRANDITO */
-.game-bg { background-color: #0b132b; max-width: 1000px; } /* Più largo per il tabellone */
-.board-wrapper { transform: scale(1.2); margin: 60px 0; } /* Ingrandisce il tabellone */
+/* TABELLONE REATTIVO PER IPAD */
+.board-wrapper { 
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    overflow-x: auto; /* Permette di scorrere il tabellone se troppo largo */
+}
 
 .board { 
-    background: #111; padding: 10px; border: 8px solid #444; border-radius: 20px;
-    display: inline-flex; flex-direction: column; gap: 4px;
+    background: #111; 
+    padding: 15px; 
+    border: 6px solid #444; 
+    border-radius: 20px;
+    display: inline-flex; 
+    flex-direction: column; 
+    gap: 4px;
+    /* Rimosso scale(1.2) che spesso crea bug di visualizzazione su Safari/iPad */
 }
-.row { display: grid; gap: 4px; justify-content: center; }
-.r1, .r4 { grid-template-columns: repeat(12, 40px); }
-.r2, .r3 { grid-template-columns: repeat(14, 40px); }
 
+/* Dimensioni caselle ottimizzate per tablet */
 .tile { 
-    width: 40px; height: 55px; background: var(--tile-green); 
-    display: flex; justify-content: center; align-items: center; 
-    font-size: 24px; font-weight: bold; color: black; border-radius: 2px;
+    width: 30px; 
+    height: 45px; 
+    background: var(--tile-green); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 18px; 
+    font-weight: bold; 
+    color: black; 
 }
-.tile.active { background: white; border: 2px solid var(--neon-pink); }
-
-/* TASTIERA 26 CARATTERI */
-.keyboard { 
-    display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; 
-    max-width: 600px; margin: 40px auto; 
-}
-.key {
-    background: #3a506b; color: white; border: none; padding: 15px 5px;
-    border-radius: 5px; font-weight: bold; cursor: pointer;
-}
-.key:disabled { background: #1a2634; color: #444; }
