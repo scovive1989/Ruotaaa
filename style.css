@@ -84,11 +84,7 @@ body, html {
 }
 
 /* --- TABELLONE ALTO --- */
-.board-main-wrapper {
-    flex: 1; display: flex; justify-content: center;
-    align-items: flex-start; width: 100%; padding-top: 10px;       
-    box-sizing: border-box;
-}
+
 
 .wheel-table {
     table-layout: fixed; border-collapse: separate; border-spacing: 6px;
@@ -97,13 +93,7 @@ body, html {
 }
 
 /* --- CATEGORIA AL CENTRO (Tra Tabellone e Tastiera) --- */
-.category-tag {
-    margin: 20px 0; min-width: 380px; height: 70px;
-    background-color: white; color: black; border-radius: 35px;
-    display: flex; justify-content: center; align-items: center;
-    font-size: 1.8rem; font-weight: bold; text-transform: uppercase;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-}
+
 
 .tile {
     width: 55px; height: 80px; background-color: var(--tile-green);
@@ -122,11 +112,49 @@ body, html {
 }
 
 /* --- TASTIERA --- */
-.keyboard {
-    width: 100%; background: rgba(0,0,0,0.5); padding: 20px 10px;
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 10px;
+/* TABELLONE - Occupa solo lo spazio necessario in alto */
+.board-main-wrapper {
+    flex: 0 1 auto;      /* Non si espande, occupa solo il suo spazio */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding-top: 20px;   
     box-sizing: border-box;
 }
+
+/* CATEGORIA - Diventa l'elemento flessibile che spinge */
+.category-tag {
+    flex: 1;             /* Prende TUTTO lo spazio vuoto tra board e tastiera */
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Centra il testo verticalmente nello spazio flex */
+    
+    /* Stile estetico (rimane uguale) */
+    background-color: white;
+    color: black;
+    min-width: 380px;
+    max-height: 70px;    /* Impedisce alla casella di diventare troppo alta */
+    margin: auto;        /* La centra orizzontalmente */
+    border-radius: 35px;
+    font-size: 1.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+}
+
+/* TASTIERA - Rimane fissa in basso */
+.keyboard {
+    flex: 0 0 auto;      /* Non si muove dal fondo */
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    padding: 20px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+}
+
 
 .key {
     flex: 0 1 7%; min-width: 60px; height: 65px;
