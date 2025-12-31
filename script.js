@@ -28,7 +28,6 @@ function startGame(idx) {
     const data = livelli[idx];
     document.getElementById('categoryDisplay').innerText = data.categoria;
     
-    // Reset e costruzione tabellone
     const words = data.frase.split(' ');
     let rowsData = [[], [], [], []];
     let currRow = 1;
@@ -67,11 +66,11 @@ function setupKeyboard() {
         b.innerText = l;
         b.onclick = () => {
             b.disabled = true;
-            document.querySelectorAll(`.tile[data-letter="${l}"]`).forEach(t => t.innerText = l);
+            const targets = document.querySelectorAll(`.tile[data-letter="${l}"]`);
+            targets.forEach(t => t.innerText = l);
         };
         kb.appendChild(b);
     });
 }
 
-// Avvio forzato
 window.onload = init;
