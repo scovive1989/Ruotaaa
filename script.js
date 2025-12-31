@@ -56,6 +56,54 @@ function startGame(idx) {
     }
     setupKeyboard();
 }
+function setupBoard(frase) {
+    const words = frase.split(' ');
+    let rowsData = [[], [], [], []];
+    let currRow = 1;
+
+    // Distribuzione parole sulle righe
+    words.forEach(w => {
+        if (rowsData[currRow].join(' ').length + w.length + 1 > rowCaps[currRow]) currRow++;
+        if (currRow < 4) rowsData[currRow].push(w);
+    });
+
+    for (let i = 0; i < 4; i++) {
+        const tr = document.getElementById(`row-${i+1}`);
+        tr.innerHTML = '';
+        const txt = rowsData[i].join(' ');
+        
+        // Calcolo del padding per centrare il testo nella riga
+        const pad = Math.floor((rowCaps[i] - txt.length) / 2);
+
+        // Se è la riga 1 (indice 0) o la riga 4 (indice 3), 
+        // aggiungiamo una cella "morta" all'inizio per l'effetto rientrato
+        if (i === 0 || i === 3) {
+            const emptyCell = document.createElement('td');
+            emptyCell.style.visibility = "hidden"; // Rende la cella invisibile ma occupa spazio
+            emptyCell.className = "tile-spacer";
+            tr.appendChild(emptyCell);
+        }
+
+        for (let j = 0; j < rowCaps[i]; j++) {
+            const td = document.createElement('td');
+            td.className = 'tile';
+            const char = txt[j - pad];
+            if (char && char !== ' ') {
+                td.classList.add('active');
+                td.dataset.letter = char;
+            }
+            tr.appendChild(td);
+        }
+        
+        // Aggiungiamo la cella invisibile anche alla fine per simmetria
+        if (i === 0 || i === 3) {
+            const emptyCellEnd = document.createElement('td');
+            emptyCellEnd.style.visibility = "hidden";
+            emptyCellEnd.className = "tile-spacer";
+            tr.appendChild(emptyCellEnd);
+        }
+    }
+}
 
 function setupKeyboard() {
     const kb = document.getElementById('keyboard');
