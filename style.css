@@ -19,7 +19,15 @@ body, html {
 .hidden { display: none !important; }
 
 /* --- MENU PRINCIPALE --- */
-.menu-title { color: var(--level-yellow); font-size: 3rem; margin: 30px 0; }
+/* LOGO NEL MENU */
+.menu-logo {
+    width: 90%;          /* Si adatta alla larghezza dello schermo iPad */
+    max-width: 600px;    /* Impedisce che diventi troppo gigante */
+    height: auto;
+    margin: 20px 0;      /* Spazio sopra e sotto il logo */
+    filter: drop-shadow(0 5px 15px rgba(0,0,0,0.5)); /* Effetto profondità */
+}
+
 
 /* CONTENITORE RICERCA */
 .search-container {
