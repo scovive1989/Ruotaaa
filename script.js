@@ -12,12 +12,32 @@ const rowCaps = [12, 14, 14, 12];
 function init() {
     const list = document.getElementById('levels-list');
     if(!list) return;
+    
+    renderLevels(livelli);
+
+    // LOGICA DI RICERCA: Filtra i bottoni in tempo reale
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toUpperCase();
+            const filtered = livelli.filter(l => l.categoria.includes(term));
+            renderLevels(filtered);
+        });
+    }
+}
+
+// Funzione per disegnare la lista dei bottoni (usata anche per il filtro)
+function renderLevels(dataArray) {
+    const list = document.getElementById('levels-list');
     list.innerHTML = '';
-    livelli.forEach((liv, index) => {
+    dataArray.forEach((liv) => {
+        // Troviamo l'indice originale per far partire il livello giusto
+        const originalIndex = livelli.findIndex(l => l.id === liv.id);
+        
         const btn = document.createElement('button');
         btn.className = 'level-btn';
         btn.innerText = `LIV. ${liv.id}: ${liv.categoria}`;
-        btn.onclick = () => startGame(index);
+        btn.onclick = () => startGame(originalIndex);
         list.appendChild(btn);
     });
 }
@@ -28,7 +48,6 @@ function startGame(idx) {
     const data = livelli[idx];
     document.getElementById('categoryDisplay').innerText = data.categoria;
     
-    // Chiamiamo la funzione che disegna il tabellone correttamente
     setupBoard(data.frase);
     setupKeyboard();
 }
@@ -38,7 +57,7 @@ function setupBoard(frase) {
     let rowsData = [[], [], [], []];
     let currRow = 1;
 
-    // 1. Distribuzione parole sulle righe (Wrapping)
+    // 1. Distribuzione parole sulle righe
     words.forEach(w => {
         if (rowsData[currRow].join(' ').length + w.length + 1 > rowCaps[currRow]) {
             currRow++;
@@ -53,28 +72,21 @@ function setupBoard(frase) {
         
         const txt = rowsData[i].join(' ');
         const pad = Math.floor((rowCaps[i] - txt.length) / 2);
-
-        // Ogni riga ha 14 slot totali per garantire l'allineamento verticale
         const totalSlots = 14; 
         
         for (let j = 0; j < totalSlots; j++) {
             const td = document.createElement('td');
             
-            // LOGICA DEL SALTO: Riga 1 (i=0) e Riga 4 (i=3)
-            // Nascondiamo la prima (j=0) e l'ultima (j=13) cella
             if ((i === 0 || i === 3) && (j === 0 || j === 13)) {
-                td.className = 'tile offset-tile'; // Usa offset-tile per nasconderla
+                td.className = 'tile offset-tile';
             } else {
                 td.className = 'tile';
-                
-                // Calcoliamo l'indice del carattere correggendo l'offset per le righe 1 e 4
                 const charIndex = (i === 0 || i === 3) ? (j - 1 - pad) : (j - pad);
                 const char = txt[charIndex];
 
                 if (char && char !== ' ') {
                     td.classList.add('active');
                     td.dataset.letter = char;
-                    // td.innerText = char; // Decommenta questa riga se vuoi vedere subito le lettere per testare
                 }
             }
             tr.appendChild(td);
@@ -94,7 +106,7 @@ function setupKeyboard() {
             const targets = document.querySelectorAll(`.tile[data-letter="${l}"]`);
             targets.forEach(t => {
                 t.innerText = l;
-                t.style.backgroundColor = "white"; // Opzionale: assicura il colore bianco
+                t.style.backgroundColor = "white";
             });
         };
         kb.appendChild(b);
