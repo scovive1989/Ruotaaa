@@ -24,6 +24,11 @@ body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(-
     width: 100%;
     padding: 10px;
 }
+/* Definisce lo spazio vuoto ai lati della riga 1 e 4 */
+.tile-spacer {
+    width: 50px; /* Deve essere uguale alla larghezza della .tile */
+    min-width: 50px;
+}
 
 .wheel-table {
     border-collapse: separate;
