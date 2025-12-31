@@ -1,62 +1,72 @@
-:root {
-    --menu-green: #113825;
-    --level-yellow: #ffed4a;
-    --tile-green: #006837;
-    --neon-pink: #ff00ff;
+/* Contenitore principale del gioco */
+.game-bg {
+    background-color: #1a4731; /* Verde come il menu */
+    width: 100vw;
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
 }
 
-body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: var(--menu-green);
-    color: white;
+/* Wrapper del tabellone per evitare il collasso */
+.board-wrapper {
+    width: 95%;
     display: flex;
     justify-content: center;
+    margin: 20px 0;
 }
 
-.screen { width: 100%; max-width: 500px; min-height: 100vh; text-align: center; padding: 20px; box-sizing: border-box; }
-.hidden { display: none !important; }
-
-/* STILE MENU (Dall'immagine) */
-.menu-title { color: var(--level-yellow); font-size: 2.5rem; margin-top: 40px; font-weight: 900; }
-.search-container { margin: 20px 0; }
-.search-container input {
-    width: 90%; padding: 12px 40px; border-radius: 15px; border: none; font-size: 1rem;
-}
-
-.levels-list { display: flex; flex-direction: column; gap: 12px; align-items: center; }
-.level-btn {
-    width: 90%; background-color: var(--level-yellow); border: none; padding: 18px;
-    border-radius: 15px; color: black; font-weight: bold; font-size: 1.1rem;
-    cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
-}
-
-/* STILE GIOCO E TABELLONE INGRANDITO */
-.game-bg { background-color: #0b132b; max-width: 1000px; } /* Più largo per il tabellone */
-.board-wrapper { transform: scale(1.2); margin: 60px 0; } /* Ingrandisce il tabellone */
-
+/* IL TABELLONE: Forza la struttura orizzontale */
 .board { 
-    background: #111; padding: 10px; border: 8px solid #444; border-radius: 20px;
-    display: inline-flex; flex-direction: column; gap: 4px;
+    background: #111; 
+    padding: 10px; 
+    border: 5px solid #444; 
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: fit-content; /* Si adatta al contenuto orizzontale */
 }
-.row { display: grid; gap: 4px; justify-content: center; }
-.r1, .r4 { grid-template-columns: repeat(12, 40px); }
-.r2, .r3 { grid-template-columns: repeat(14, 40px); }
 
+/* RIGA: Impedisce alle caselle di andare a capo */
+.row { 
+    display: flex; /* Cambiato da grid a flex per più stabilità mobile */
+    justify-content: center;
+    gap: 3px;
+    width: 100%;
+}
+
+/* CASELLA: Dimensioni fisse e proporzionate */
 .tile { 
-    width: 40px; height: 55px; background: var(--tile-green); 
-    display: flex; justify-content: center; align-items: center; 
-    font-size: 24px; font-weight: bold; color: black; border-radius: 2px;
+    width: 6vw; /* Dimensione fluida basata sulla larghezza schermo */
+    max-width: 40px; 
+    min-width: 20px;
+    height: 8vw;
+    max-height: 55px;
+    min-height: 30px;
+    background: #006837; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: 1.2rem;
+    font-weight: bold; 
+    color: black; 
+    border-radius: 2px;
+    flex-shrink: 0; /* Impedisce alla casella di schiacciarsi */
 }
-.tile.active { background: white; border: 2px solid var(--neon-pink); }
 
-/* TASTIERA 26 CARATTERI */
-.keyboard { 
-    display: grid; grid-template-columns: repeat(9, 1fr); gap: 8px; 
-    max-width: 600px; margin: 40px auto; 
+.tile.active { 
+    background: white; 
+    border: 2px solid #ff00ff; 
 }
-.key {
-    background: #3a506b; color: white; border: none; padding: 15px 5px;
-    border-radius: 5px; font-weight: bold; cursor: pointer;
+
+/* Tastiera compatta per iPad */
+.keyboard {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 5px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
 }
-.key:disabled { background: #1a2634; color: #444; }
