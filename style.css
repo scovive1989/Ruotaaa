@@ -46,10 +46,12 @@ body, html { margin: 0; padding: 0; width: 100%; height: 100%; background: var(-
     flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Cambiato da center a flex-start per alzarlo */
     width: 100%;
-    padding: 10px;
+    padding-top: 20px;       /* Regola questo valore per decidere quanto deve stare in alto */
+    box-sizing: border-box;
 }
+
 
 .wheel-table {
     table-layout: fixed; 
