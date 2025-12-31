@@ -69,18 +69,37 @@ body, html {
     font-weight: bold; font-size: 1.4rem; color: #000; cursor: pointer; 
 }
 
-/* --- HEADER GIOCO (Solo Menu a sinistra) --- */
+/* HEADER GIOCO (Tasti ai lati) */
 .game-header { 
-    display: flex; justify-content: flex-start; 
-    width: 100%; padding: 15px 40px; box-sizing: border-box; 
+    display: flex; 
+    justify-content: space-between; /* Spinge MENU a sx e SOLUZIONE a dx */
+    align-items: center; 
+    width: 100%; 
+    padding: 15px 40px; 
+    box-sizing: border-box; 
 }
 
-.back-btn {
-    min-width: 250px; height: 70px;     
-    display: flex; justify-content: center; align-items: center;
-    border-radius: 35px; font-size: 1.6rem; font-weight: bold;
-    text-transform: uppercase; box-shadow: 0 5px rgba(0,0,0,0.4);
-    background: #444; color: white; border: 2px solid #666; cursor: pointer;
+/* Stile unico per i bottoni in alto */
+.back-btn, .solve-btn {
+    min-width: 250px; 
+    height: 70px;     
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 35px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    box-shadow: 0 5px rgba(0,0,0,0.4);
+    background: #444; 
+    color: white; 
+    border: 2px solid #666; 
+    cursor: pointer;
+}
+
+.back-btn:active, .solve-btn:active {
+    transform: translateY(3px);
+    box-shadow: 0 2px rgba(0,0,0,0.4);
 }
 
 /* --- TABELLONE ALTO --- */
