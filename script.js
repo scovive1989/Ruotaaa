@@ -72,18 +72,24 @@ function revealSolution() {
     const keys = document.querySelectorAll('.key');
     keys.forEach(k => k.disabled = true);
 }
-
 function setupBoard(frase) {
     const words = frase.split(' ');
     let rowsData = [[], [], [], []];
-    let currRow = 1;
+    let currRow = 0; // Partiamo dalla riga 1 (indice 0)
 
     // 1. Distribuzione parole sulle righe
     words.forEach(w => {
-        if (rowsData[currRow].join(' ').length + w.length + 1 > rowCaps[currRow]) {
-            currRow++;
+        // Controlla se la parola ci sta nella riga attuale
+        // Consideriamo anche lo spazio tra le parole (+1)
+        let currentRowText = rowsData[currRow].join(' ');
+        let spaceNeeded = currentRowText.length > 0 ? 1 : 0;
+
+        if (currentRowText.length + spaceNeeded + w.length > rowCaps[currRow]) {
+            if (currRow < 3) {
+                currRow++; // Passa alla riga successiva se c'è spazio
+            }
         }
-        if (currRow < 4) rowsData[currRow].push(w);
+        rowsData[currRow].push(w);
     });
 
     // 2. Generazione fisica delle caselle
@@ -92,16 +98,20 @@ function setupBoard(frase) {
         tr.innerHTML = '';
         
         const txt = rowsData[i].join(' ');
+        // Calcoliamo il padding per centrare il testo nella riga
         const pad = Math.floor((rowCaps[i] - txt.length) / 2);
         const totalSlots = 14; 
         
         for (let j = 0; j < totalSlots; j++) {
             const td = document.createElement('td');
             
+            // Logica dei bordi (12 slot per righe 1 e 4, 14 slot per righe 2 e 3)
             if ((i === 0 || i === 3) && (j === 0 || j === 13)) {
                 td.className = 'tile offset-tile';
             } else {
                 td.className = 'tile';
+                
+                // Calcolo corretto del carattere
                 const charIndex = (i === 0 || i === 3) ? (j - 1 - pad) : (j - pad);
                 const char = txt[charIndex];
 
@@ -114,6 +124,7 @@ function setupBoard(frase) {
         }
     }
 }
+
 
 function setupKeyboard() {
     const kb = document.getElementById('keyboard');
