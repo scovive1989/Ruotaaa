@@ -14,21 +14,25 @@
     </div>
 
     <div id="game-screen" class="screen hidden game-bg">
-        <div class="game-header">
-            <button class="back-btn" onclick="location.reload()">← MENU</button>
-        </div>
-
-        <div class="board-main-wrapper">
-            <table class="wheel-table">
-                <tr id="row-1"></tr>
-                <tr id="row-2"></tr>
-                <tr id="row-3"></tr>
-                <tr id="row-4"></tr>
-            </table>
-        </div>
-            <div id="categoryDisplay" class="category-tag central-category">CATEGORIA</div>
-        <div id="keyboard" class="keyboard"></div>
+    <div class="game-header">
+        <button class="back-btn" onclick="location.reload()">← MENU</button>
+        <button class="solve-btn" onclick="revealSolution()">SOLUZIONE</button>
     </div>
+
+    <div class="board-main-wrapper">
+        <table class="wheel-table">
+            <tr id="row-1"></tr>
+            <tr id="row-2"></tr>
+            <tr id="row-3"></tr>
+            <tr id="row-4"></tr>
+        </table>
+    </div>
+
+    <div id="categoryDisplay" class="category-tag">CATEGORIA</div>
+
+    <div id="keyboard" class="keyboard"></div>
+</div>
+
     <script src="script.js"></script>
 </body>
 </html>
