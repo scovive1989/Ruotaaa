@@ -61,7 +61,7 @@ function setupBoard(frase) {
     let rowsData = [[], [], [], []];
     let currRow = 1;
 
-    // Distribuzione parole sulle righe
+    // Distribuzione parole
     words.forEach(w => {
         if (rowsData[currRow].join(' ').length + w.length + 1 > rowCaps[currRow]) currRow++;
         if (currRow < 4) rowsData[currRow].push(w);
@@ -70,37 +70,33 @@ function setupBoard(frase) {
     for (let i = 0; i < 4; i++) {
         const tr = document.getElementById(`row-${i+1}`);
         tr.innerHTML = '';
-        const txt = rowsData[i].join(' ');
         
-        // Calcolo del padding per centrare il testo nella riga
+        const txt = rowsData[i].join(' ');
         const pad = Math.floor((rowCaps[i] - txt.length) / 2);
 
-        // Se è la riga 1 (indice 0) o la riga 4 (indice 3), 
-        // aggiungiamo una cella "morta" all'inizio per l'effetto rientrato
-        if (i === 0 || i === 3) {
-            const emptyCell = document.createElement('td');
-            emptyCell.style.visibility = "hidden"; // Rende la cella invisibile ma occupa spazio
-            emptyCell.className = "tile-spacer";
-            tr.appendChild(emptyCell);
-        }
-
-        for (let j = 0; j < rowCaps[i]; j++) {
+        // Tutte le righe ora hanno 14 slot nel DOM per allinearsi perfettamente
+        const totalSlots = 14; 
+        
+        for (let j = 0; j < totalSlots; j++) {
             const td = document.createElement('td');
             td.className = 'tile';
-            const char = txt[j - pad];
-            if (char && char !== ' ') {
-                td.classList.add('active');
-                td.dataset.letter = char;
+
+            // LOGICA DEL SALTO (Riga 1 e 4)
+            // Se siamo nella riga 1 o 4, la prima (0) e l'ultima (13) cella sono vuote
+            if ((i === 0 || i === 3) && (j === 0 || j === 13)) {
+                td.classList.add('offset-tile');
+            } else {
+                // Calcoliamo la lettera per le caselle centrali
+                // Nelle righe 1 e 4, lo slot "0" del testo corrisponde al j=1
+                const charIndex = (i === 0 || i === 3) ? j - 1 - pad : j - pad;
+                const char = txt[charIndex];
+
+                if (char && char !== ' ') {
+                    td.classList.add('active');
+                    td.dataset.letter = char;
+                }
             }
             tr.appendChild(td);
-        }
-        
-        // Aggiungiamo la cella invisibile anche alla fine per simmetria
-        if (i === 0 || i === 3) {
-            const emptyCellEnd = document.createElement('td');
-            emptyCellEnd.style.visibility = "hidden";
-            emptyCellEnd.className = "tile-spacer";
-            tr.appendChild(emptyCellEnd);
         }
     }
 }
