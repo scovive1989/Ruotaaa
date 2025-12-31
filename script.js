@@ -4,14 +4,14 @@ const livelli = [
     { id: 4, categoria: "PROVERBI", frase: "MEGLIO TARDI CHE MAI" },
     { id: 5, categoria: "CITTÀ", frase: "MILANO MARITTIMA" },
     { id: 6, categoria: "STORIA", frase: "GIULIO CESARE" },
-    { id: 7, categoria: "FILM", frase: "AVATAR LA VIA DELL ACQUA" },
-    { id: 8, categoria: "CUCINA", frase: "RISOTTO ALLO ZAFFERANO" }
+    { id: 7, categoria: "FILM", frase: "IL GLADIATORE" }
 ];
 
-const capacities = [12, 14, 14, 12];
+const rowCaps = [12, 14, 14, 12];
 
 function init() {
     const list = document.getElementById('levels-list');
+    list.innerHTML = '';
     livelli.forEach((liv, index) => {
         const btn = document.createElement('button');
         btn.className = 'level-btn';
@@ -24,7 +24,6 @@ function init() {
 function startGame(idx) {
     document.getElementById('home-screen').classList.add('hidden');
     document.getElementById('game-screen').classList.remove('hidden');
-    
     const data = livelli[idx];
     document.getElementById('categoryDisplay').innerText = data.categoria;
     setupBoard(data.frase);
@@ -38,29 +37,29 @@ function showHome() {
 
 function setupBoard(frase) {
     const words = frase.split(' ');
-    let rows = [[], [], [], []];
-    let curr = 1;
+    let rowsData = [[], [], [], []];
+    let currRow = 1;
 
     words.forEach(w => {
-        if (rows[curr].join(' ').length + w.length + 1 > capacities[curr]) curr++;
-        if (curr < 4) rows[curr].push(w);
+        if (rowsData[currRow].join(' ').length + w.length + 1 > rowCaps[currRow]) currRow++;
+        if (currRow < 4) rowsData[currRow].push(w);
     });
 
     for (let i = 0; i < 4; i++) {
-        const el = document.getElementById(`row-${i+1}`);
-        el.innerHTML = '';
-        const txt = rows[i].join(' ');
-        const pad = Math.floor((capacities[i] - txt.length) / 2);
+        const tr = document.getElementById(`row-${i+1}`);
+        tr.innerHTML = '';
+        const txt = rowsData[i].join(' ');
+        const pad = Math.floor((rowCaps[i] - txt.length) / 2);
 
-        for (let j = 0; j < capacities[i]; j++) {
-            const tile = document.createElement('div');
-            tile.className = 'tile';
+        for (let j = 0; j < rowCaps[i]; j++) {
+            const td = document.createElement('td');
+            td.className = 'tile';
             const char = txt[j - pad];
             if (char && char !== ' ') {
-                tile.classList.add('active');
-                tile.dataset.letter = char;
+                td.classList.add('active');
+                td.dataset.letter = char;
             }
-            el.appendChild(tile);
+            tr.appendChild(td);
         }
     }
 }
@@ -68,7 +67,6 @@ function setupBoard(frase) {
 function setupKeyboard() {
     const kb = document.getElementById('keyboard');
     kb.innerHTML = '';
-    // Tutti i 26 caratteri dell'alfabeto internazionale
     "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split('').forEach(l => {
         const b = document.createElement('button');
         b.className = 'key';
