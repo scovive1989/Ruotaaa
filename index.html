@@ -13,17 +13,18 @@
         <div class="search-container">
             <input type="text" placeholder="Cerca categoria..." id="searchInput">
         </div>
-        <div id="levels-list" class="levels-list"></div>
+        <div id="levels-list" class="levels-list">
+            </div>
     </div>
 
     <div id="game-screen" class="screen hidden game-bg">
         <div class="game-header">
-            <button class="back-btn" onclick="showHome()">← Torna ai Livelli</button>
+            <button class="back-btn" onclick="location.reload()">← Torna ai Livelli</button>
             <div id="categoryDisplay" class="category-tag">CATEGORIA</div>
         </div>
 
-        <div class="board-container">
-            <table id="game-board" class="wheel-board">
+        <div class="board-outer-container">
+            <table class="wheel-table">
                 <tr id="row-1"></tr>
                 <tr id="row-2"></tr>
                 <tr id="row-3"></tr>
