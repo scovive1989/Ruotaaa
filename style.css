@@ -1,52 +1,65 @@
+:root {
+    --bg-color: #0b132b;
+    --board-border: #333;
+    --tile-empty: #006837; /* Verde classico Wheel of Fortune */
+    --tile-active: #ffffff;
+    --neon-pink: #ff00ff;
+}
+
 body {
-    background-color: #1a1a2e;
+    background-color: var(--bg-color);
+    color: white;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
     margin: 0;
-    font-family: sans-serif;
 }
+
+.game-container { text-align: center; }
+
+.header { margin-bottom: 20px; }
 
 .board {
-    background: linear-gradient(145deg, #111, #333);
-    padding: 15px;
-    border: 8px solid #444;
-    border-radius: 40px; /* Arrotondato come in foto */
-    box-shadow: 0 0 20px rgba(0,0,0,0.5), inset 0 0 15px #ff00ff66;
+    background-color: #111;
+    padding: 20px;
+    border: 10px solid var(--board-border);
+    border-radius: 50px;
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.8);
 }
 
-.row {
-    display: grid;
-    gap: 5px;
-}
-
-/* Griglia 12 - 14 - 14 - 12 */
-.r1, .r4 { grid-template-columns: repeat(12, 45px); }
-.r2, .r3 { grid-template-columns: repeat(14, 45px); }
+.row { display: grid; gap: 5px; justify-content: center; }
+.r1, .r4 { grid-template-columns: repeat(12, 40px); }
+.r2, .r3 { grid-template-columns: repeat(14, 40px); }
 
 .tile {
-    width: 45px;
-    height: 60px; /* Rapporto verticale */
-    background-color: #004422; /* Colore casella vuota (verde scuro) */
-    border: 2px solid #222;
-    border-radius: 3px;
+    width: 40px;
+    height: 55px;
+    background-color: var(--tile-empty);
+    border: 1px solid #004422;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
-    text-transform: uppercase;
-    transition: all 0.3s;
+    color: black;
+    border-radius: 2px;
 }
 
-/* Quando la casella è "attiva" (bianca per la lettera) */
 .tile.active {
-    background-color: white;
-    border-color: #ff00ff; /* Bordo rosa neon */
-    box-shadow: 0 0 5px #ff00ff;
+    background-color: var(--tile-active);
+    border: 2px solid var(--neon-pink);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+}
+
+select {
+    padding: 8px;
+    border-radius: 5px;
+    background: #1c2541;
+    color: white;
+    border: 1px solid var(--neon-pink);
 }
