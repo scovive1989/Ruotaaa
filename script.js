@@ -20,6 +20,7 @@ function init() {
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toUpperCase();
+            // Filtra cercando sia nella categoria che nell'ID (opzionale)
             const filtered = livelli.filter(l => l.categoria.includes(term));
             renderLevels(filtered);
         });
@@ -29,9 +30,10 @@ function init() {
 // Funzione per disegnare la lista dei bottoni (usata anche per il filtro)
 function renderLevels(dataArray) {
     const list = document.getElementById('levels-list');
+    if (!list) return;
+    
     list.innerHTML = '';
     dataArray.forEach((liv) => {
-        // Troviamo l'indice originale per far partire il livello giusto
         const originalIndex = livelli.findIndex(l => l.id === liv.id);
         
         const btn = document.createElement('button');
@@ -50,6 +52,24 @@ function startGame(idx) {
     
     setupBoard(data.frase);
     setupKeyboard();
+}
+
+// NUOVA FUNZIONE: Rivela tutta la frase
+function revealSolution() {
+    if(!confirm("Vuoi visualizzare la soluzione completa?")) return;
+    
+    const activeTiles = document.querySelectorAll('.tile.active');
+    activeTiles.forEach(tile => {
+        const letter = tile.dataset.letter;
+        if (letter) {
+            tile.innerText = letter;
+            tile.style.backgroundColor = "white";
+        }
+    });
+
+    // Disabilita i tasti per indicare che il gioco è terminato
+    const keys = document.querySelectorAll('.key');
+    keys.forEach(k => k.disabled = true);
 }
 
 function setupBoard(frase) {
