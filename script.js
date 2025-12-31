@@ -1,11 +1,11 @@
 const livelli = [
     { id: 1, categoria: "LIGABUE", frase: "IN UN SUO DISCO URLA CONTRO IL CIELO"},
-    { id: 2, categoria: "CUCINA", frase: "LASAGNE AL FORNO" },
-    { id: 3, categoria: "GEOGRAFIA", frase: "GRAN SASSO" },
-    { id: 4, categoria: "PROVERBI", frase: "MEGLIO TARDI CHE MAI" },
-    { id: 5, categoria: "CITTÀ", frase: "MILANO MARITTIMA" },
-    { id: 6, categoria: "STORIA", frase: "GIULIO CESARE" },
-    { id: 7, categoria: "FILM", frase: "IL GLADIATORE" }
+    { id: 2, categoria: "TRECCE", frase: "IN UN DISCO VENGONO SCIOLTE AI CAVALLI" },
+    { id: 3, categoria: "IN UFFICIO", frase: "IN PAUSA CAFFE SI SPETTEGOLA TRA COLLEGHI" },
+    { id: 4, categoria: "LA SCIMMIA", frase: "IN MOTO INDOSSA IL CASCO DI BANANE" },
+    { id: 5, categoria: "METE TURISTICHE", frase: "IN ANDALUSIA CORDOBA E SIVIGLIA" },
+    { id: 6, categoria: "OGGETTI MITOLOGICI", frase: "IL VASO SCOPERCHIATO DI PANDORA" },
+    { id: 7, categoria: "NEGLI ABISSI0", frase: "IL TRIDENTE DI POSEIDONE" }
 ];
 
 const rowCaps = [12, 14, 14, 12];
