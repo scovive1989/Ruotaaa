@@ -1,4 +1,5 @@
 const livelli = [
+    { id: 1, categoria: "LIGABUE", frase: "IN UN SUO DISCO URLA CONTRO IL CIELO"},
     { id: 2, categoria: "CUCINA", frase: "LASAGNE AL FORNO" },
     { id: 3, categoria: "GEOGRAFIA", frase: "GRAN SASSO" },
     { id: 4, categoria: "PROVERBI", frase: "MEGLIO TARDI CHE MAI" },
