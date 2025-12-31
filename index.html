@@ -3,27 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>La Ruota della Fortuna</title>
+    <title>Ruota della Fortuna Pro</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
     <div id="home-screen" class="screen menu-bg">
         <h1 class="menu-title">I MIEI LIVELLI</h1>
-        <div class="search-container">
-            <input type="text" placeholder="Cerca categoria..." id="searchInput">
-        </div>
-        <div id="levels-list" class="levels-list">
-            </div>
+        <div class="search-container"><input type="text" placeholder="Cerca categoria..."></div>
+        <div id="levels-list" class="levels-list"></div>
     </div>
 
     <div id="game-screen" class="screen hidden game-bg">
         <div class="game-header">
-            <button class="back-btn" onclick="location.reload()">← Torna ai Livelli</button>
+            <button class="back-btn" onclick="location.reload()">← MENU</button>
             <div id="categoryDisplay" class="category-tag">CATEGORIA</div>
         </div>
 
-        <div class="board-outer-container">
+        <div class="board-main-wrapper">
             <table class="wheel-table">
                 <tr id="row-1"></tr>
                 <tr id="row-2"></tr>
@@ -34,7 +30,6 @@
 
         <div id="keyboard" class="keyboard"></div>
     </div>
-
     <script src="script.js"></script>
 </body>
 </html>
