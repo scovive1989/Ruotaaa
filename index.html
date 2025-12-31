@@ -2,21 +2,18 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>La Ruota della Fortuna - I Miei Livelli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>La Ruota della Fortuna</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div id="home-screen" class="screen menu-bg">
         <h1 class="menu-title">I MIEI LIVELLI</h1>
-        
         <div class="search-container">
             <input type="text" placeholder="Cerca categoria..." id="searchInput">
         </div>
-
-        <div id="levels-list" class="levels-list">
-            </div>
+        <div id="levels-list" class="levels-list"></div>
     </div>
 
     <div id="game-screen" class="screen hidden game-bg">
@@ -25,13 +22,13 @@
             <div id="categoryDisplay" class="category-tag">CATEGORIA</div>
         </div>
 
-        <div class="board-wrapper">
-            <div id="board" class="board">
-                <div class="row r1" id="row-1"></div>
-                <div class="row r2" id="row-2"></div>
-                <div class="row r3" id="row-3"></div>
-                <div class="row r4" id="row-4"></div>
-            </div>
+        <div class="board-container">
+            <table id="game-board" class="wheel-board">
+                <tr id="row-1"></tr>
+                <tr id="row-2"></tr>
+                <tr id="row-3"></tr>
+                <tr id="row-4"></tr>
+            </table>
         </div>
 
         <div id="keyboard" class="keyboard"></div>
