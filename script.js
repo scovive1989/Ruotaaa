@@ -1,57 +1,66 @@
 const livelli = [
     { categoria: "CIBO", frase: "PIZZA MARGHERITA" },
     { categoria: "PROVERBIO", frase: "CHI DORME NON PIGLIA PESCI" },
-    { categoria: "FILM", frase: "IL GLADIATORE" }
+    { categoria: "CINEMA", frase: "IL GLADIATORE" },
+    { categoria: "GEOGRAFIA", frase: "STATI UNITI D AMERICA" }
 ];
 
-const layout = [12, 14, 14, 12];
+const rowCapacities = [12, 14, 14, 12];
 
 function loadLevel() {
     const levelIndex = document.getElementById('levelSelect').value;
     const data = livelli[levelIndex];
     document.getElementById('categoryDisplay').innerText = `CATEGORIA: ${data.categoria}`;
     
-    generateBoard(data.frase);
+    distributePhrase(data.frase);
 }
 
-function generateBoard(frase) {
+function distributePhrase(frase) {
     const parole = frase.split(' ');
-    // Creiamo una griglia piatta di 52 celle (12+14+14+12)
-    let gridData = new Array(52).fill(null);
+    let rows = [[], [], [], []];
+    let currentRow = 1; // Iniziamo solitamente dalla seconda riga (quella da 14) per estetica
 
-    // Logica semplificata: mettiamo la frase partendo dalla seconda riga (indice 12)
-    let cursor = 13; // Inizia un po' spostato per centrare
-    
-    frase.split('').forEach(char => {
-        if(cursor < 52) {
-            gridData[cursor] = char === ' ' ? null : char;
-            cursor++;
+    parole.forEach(parola => {
+        // Se la parola non sta nella riga attuale, passa alla successiva
+        const spazioRimanente = rowCapacities[currentRow] - rows[currentRow].join('').length - (rows[currentRow].length > 0 ? 1 : 0);
+        
+        if (parola.length > spazioRimanente) {
+            currentRow++;
+        }
+
+        if (currentRow < 4) {
+            rows[currentRow].push(parola);
         }
     });
 
-    // Disegniamo fisicamente le caselle
-    let cellIndex = 0;
-    layout.forEach((count, rowIndex) => {
-        const rowElement = document.getElementById(`row-${rowIndex + 1}`);
+    renderBoard(rows);
+}
+
+function renderBoard(rowsData) {
+    for (let i = 0; i < 4; i++) {
+        const rowElement = document.getElementById(`row-${i + 1}`);
         rowElement.innerHTML = '';
+        const capacity = rowCapacities[i];
         
-        for (let i = 0; i < count; i++) {
+        // Uniamo le parole della riga con uno spazio e centriamo
+        const rigaTesto = rowsData[i].join(' ');
+        const paddingLeft = Math.floor((capacity - rigaTesto.length) / 2);
+
+        for (let j = 0; j < capacity; j++) {
             const tile = document.createElement('div');
             tile.classList.add('tile');
-            
-            const contenuto = gridData[cellIndex];
-            if (contenuto !== null) {
+
+            const charIndex = j - paddingLeft;
+            const carattere = rigaTesto[charIndex];
+
+            if (carattere && carattere !== ' ') {
                 tile.classList.add('active');
-                // Nascondiamo la lettera inizialmente (meccanica di gioco)
-                tile.dataset.letter = contenuto; 
-                tile.innerText = ""; // Vuoto finché non indovini
+                tile.innerText = carattere; // Per ora mostriamo la lettera, puoi svuotarlo per il gioco
             }
-            
+
             rowElement.appendChild(tile);
-            cellIndex++;
         }
-    });
+    }
 }
 
-// Inizializza il primo livello
 window.onload = loadLevel;
