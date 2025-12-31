@@ -11,6 +11,7 @@ const rowCaps = [12, 14, 14, 12];
 
 function init() {
     const list = document.getElementById('levels-list');
+    if(!list) return;
     list.innerHTML = '';
     livelli.forEach((liv, index) => {
         const btn = document.createElement('button');
@@ -26,17 +27,9 @@ function startGame(idx) {
     document.getElementById('game-screen').classList.remove('hidden');
     const data = livelli[idx];
     document.getElementById('categoryDisplay').innerText = data.categoria;
-    setupBoard(data.frase);
-    setupKeyboard();
-}
-
-function showHome() {
-    document.getElementById('home-screen').classList.remove('hidden');
-    document.getElementById('game-screen').classList.add('hidden');
-}
-
-function setupBoard(frase) {
-    const words = frase.split(' ');
+    
+    // Reset e costruzione tabellone
+    const words = data.frase.split(' ');
     let rowsData = [[], [], [], []];
     let currRow = 1;
 
@@ -62,6 +55,7 @@ function setupBoard(frase) {
             tr.appendChild(td);
         }
     }
+    setupKeyboard();
 }
 
 function setupKeyboard() {
@@ -79,4 +73,5 @@ function setupKeyboard() {
     });
 }
 
+// Avvio forzato
 window.onload = init;
