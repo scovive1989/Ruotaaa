@@ -75,43 +75,52 @@ function revealSolution() {
 function setupBoard(frase) {
     const words = frase.split(' ');
     let rowsData = [[], [], [], []];
-    let currRow = 0; // Partiamo dalla riga 1 (indice 0)
+    let testRow = 0;
 
-    // 1. Distribuzione parole sulle righe
+    // 1. Distribuzione virtuale per capire quante righe servono
     words.forEach(w => {
-        // Controlla se la parola ci sta nella riga attuale
-        // Consideriamo anche lo spazio tra le parole (+1)
-        let currentRowText = rowsData[currRow].join(' ');
+        let currentRowText = rowsData[testRow].join(' ');
         let spaceNeeded = currentRowText.length > 0 ? 1 : 0;
-
-        if (currentRowText.length + spaceNeeded + w.length > rowCaps[currRow]) {
-            if (currRow < 3) {
-                currRow++; // Passa alla riga successiva se c'è spazio
-            }
+        if (currentRowText.length + spaceNeeded + w.length > rowCaps[testRow]) {
+            if (testRow < 3) testRow++;
         }
-        rowsData[currRow].push(w);
+        rowsData[testRow].push(w);
     });
 
-    // 2. Generazione fisica delle caselle
+    // 2. Calcolo offset verticale (Centratura)
+    let usedRows = rowsData.filter(r => r.length > 0).length;
+    let finalRows = [[], [], [], []];
+    let startAt = 0;
+
+    if (usedRows === 1) startAt = 1; // Se 1 riga, usa la seconda
+    else if (usedRows === 2) startAt = 1; // Se 2 righe, usa seconda e terza
+    else startAt = 0; // Altrimenti parti dalla prima
+
+    // Spostiamo i dati nelle righe finali in base all'offset
+    let targetRow = startAt;
+    rowsData.filter(r => r.length > 0).forEach(data => {
+        if (targetRow < 4) {
+            finalRows[targetRow] = data;
+            targetRow++;
+        }
+    });
+
+    // 3. Generazione fisica delle caselle
     for (let i = 0; i < 4; i++) {
         const tr = document.getElementById(`row-${i+1}`);
         tr.innerHTML = '';
         
-        const txt = rowsData[i].join(' ');
-        // Calcoliamo il padding per centrare il testo nella riga
+        const txt = finalRows[i].join(' ');
         const pad = Math.floor((rowCaps[i] - txt.length) / 2);
         const totalSlots = 14; 
         
         for (let j = 0; j < totalSlots; j++) {
             const td = document.createElement('td');
             
-            // Logica dei bordi (12 slot per righe 1 e 4, 14 slot per righe 2 e 3)
             if ((i === 0 || i === 3) && (j === 0 || j === 13)) {
                 td.className = 'tile offset-tile';
             } else {
                 td.className = 'tile';
-                
-                // Calcolo corretto del carattere
                 const charIndex = (i === 0 || i === 3) ? (j - 1 - pad) : (j - pad);
                 const char = txt[charIndex];
 
